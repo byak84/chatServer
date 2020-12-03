@@ -8,20 +8,21 @@ import java.util.List;
 
 public class ChatServer {
 
-    private int serverPort;
-    private List<ClientHandler> clients = new ArrayList<ClientHandler>();
+    private final int serverPort;
+    private final List<ClientHandler> clients = new ArrayList<>();
 
     public ChatServer(int port) {
         this.serverPort = port;
     }
 
     public void start() throws IOException {
-        Socket clientSocket = null;
-        ServerSocket serverSocket = null;
+        Socket clientSocket;
+        ServerSocket serverSocket;
+        boolean running = false;
         try {
             serverSocket = new ServerSocket(this.serverPort);
             System.out.println("Сервер запущен!");
-            while (true) {
+            while (running) {
                 clientSocket = serverSocket.accept();
                 System.out.println("Подключился новый клиент.");
                 ClientHandler client = new ClientHandler(this, clientSocket);
