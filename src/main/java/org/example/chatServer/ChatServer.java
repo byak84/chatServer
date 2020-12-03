@@ -15,7 +15,7 @@ public class ChatServer {
         this.serverPort = port;
     }
 
-    public void start() {
+    public void start() throws IOException {
         Socket clientSocket = null;
         ServerSocket serverSocket = null;
         try {
@@ -30,13 +30,14 @@ public class ChatServer {
             }
 
         } catch (IOException e) {
+            System.out.println("3");
             e.printStackTrace();
         }
     }
 
-    public void sendMessageToAllClients(String msg) {
+    public void sendMessageToAllClients(String msg, ClientHandler clientHandler) {
         for (ClientHandler o : this.clients) {
-            o.sendMsg(msg);
+            if (clientHandler != o) o.sendMsg(msg);
         }
     }
 
