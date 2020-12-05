@@ -29,16 +29,15 @@ public class ClientHandler implements Runnable {
         this.chatServer.sendMessageToAllClients("Новый участник в чате", null);
         boolean running = true;
         while (running) {
-            String clientMessage = this.inMessage.nextLine();
+            String clientMessage = this.inMessage.hasNext()? this.inMessage.nextLine() : "exit";
             this.chatServer.sendMessageToAllClients(clientMessage, this);
             if (clientMessage.equalsIgnoreCase("exit")) running = false;
         }
         try {
             this.clientSocket.close();
-            this.chatServer.logging("Client closed the connection!");
+            this.chatServer.logging("Client closed the connection! ");
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("2");
         }
 
     }

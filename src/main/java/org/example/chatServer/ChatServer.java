@@ -15,23 +15,22 @@ public class ChatServer {
         this.serverPort = port;
     }
 
-    public void start() throws IOException {
+    public void start() {
         Socket clientSocket;
         ServerSocket serverSocket;
-        boolean running = false;
+        boolean running = true;
         try {
             serverSocket = new ServerSocket(this.serverPort);
-            System.out.println("Сервер запущен!");
+            System.out.println("Server is started!");
             while (running) {
                 clientSocket = serverSocket.accept();
-                System.out.println("Подключился новый клиент.");
+                System.out.println("New client connected. " + clients.size());
                 ClientHandler client = new ClientHandler(this, clientSocket);
                 clients.add(client);
                 new Thread(client).start();
             }
 
         } catch (IOException e) {
-            System.out.println("3");
             e.printStackTrace();
         }
     }
